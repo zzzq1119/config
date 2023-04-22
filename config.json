@@ -1,0 +1,28 @@
+{
+    "log": {
+        "timestamp": true
+    },
+    "inbounds": [
+        {
+            "type": "vmess",
+            "tag": "vmess",
+            "listen": "0.0.0.0",
+            "listen_port": 6666,
+            "tcp_fast_open": true,
+            "users": [
+                {
+                    "name": "zzzq",
+                    "uuid": "4288e3a6-c6ef-27c7-ac85-48394f16c8db",
+                    "alterId": 0
+                }
+            ],
+            "transport": {
+                "type": "ws",
+                "path": "/",
+                "headers": {
+                    "Host": "tms.dingtalk.com"
+                }
+            }
+        }
+    ]
+  }
