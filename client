@@ -86,17 +86,17 @@
       "tag": "select",
       "outbounds": [
         "direct",
-        "singapore"
+        "proxy"
       ],
-      "default": "singapore",
+      "default": "proxy",
       "interrupt_exist_connections":true
     },
     {
       "type": "vless",
-      "tag": "singapore",
-      "server": "185.81.29.15",
+      "tag": "proxy",
+      "server": "",
       "server_port": 443,
-      "uuid": "43a5b3dc-90c0-43fd-af31-d64a86a2b339",
+      "uuid": "",
       "flow": "xtls-rprx-vision",
       "tls": {
         "enabled": true,
@@ -107,7 +107,7 @@
         },
         "reality": {
           "enabled": true,
-          "public_key": "cjGmu5-pPqCPiKi9wWUMRIpNw1mWVuygjghh7KeCfno"
+          "public_key": ""
         }
       },
       "packet_encoding": "xudp"
