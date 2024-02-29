@@ -1,4 +1,5 @@
-  "log": {
+{
+    "log": {
     "level": "debug",
     "timestamp": true
   },
@@ -6,11 +7,11 @@
     "servers": [
       {
         "tag": "google",
-        "address": "tls://8.8.8.8"
+        "address": "tls://8.8.4.4"
       },
       {
         "tag": "local",
-        "address": "223.5.5.5",
+        "address": "https://223.5.5.5/dns-query",
         "detour": "direct"
       },
       {
@@ -32,21 +33,13 @@
         "server": "google"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": [
-              "geosite-cn",
-              "geosite-category-companies@cn"
-            ]
-          }
-        ],
+        "rule_set": "geosite-geolocation-cn",
         "server": "local"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "server": "google",
+        "client_subnet": "114.114.114.114"
       },
       {
         "query_type": [
@@ -125,7 +118,10 @@
             "port": 443
           },
           {
-            "protocol": "stun"
+            "protocol": [
+               "stun",
+               "quic"
+            ]
           }
         ],
         "outbound": "block"
@@ -143,20 +139,9 @@
         "outbound": "select"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": [
-              "geoip-cn",
-              "geosite-cn",
-              "geosite-category-companies@cn"
-            ]
-          }
+        "rule_set": [
+          "geoip-cn",
+          "geosite-geolocation-cn"
         ],
         "outbound": "direct"
       }
@@ -176,15 +161,9 @@
       },
       {
         "type": "remote",
-        "tag": "geosite-geolocation-!cn",
+        "tag": "geosite-geolocation-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-category-companies@cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-companies@cn.srs"
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
       }
     ],
     "auto_detect_interface": true
@@ -195,3 +174,4 @@
       "external_ui": "dashbord"
     }
   }
+}
