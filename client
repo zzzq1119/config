@@ -20,6 +20,10 @@
     ],
     "rules": [
       {
+        "outbound": "any",
+        "server": "local"
+      },
+      {
         "clash_mode": "Direct",
         "server": "local"
       },
@@ -82,37 +86,6 @@
   ],
   "outbounds": [
     {
-      "type": "selector",
-      "tag": "select",
-      "outbounds": [
-        "direct",
-        "proxy"
-      ],
-      "default": "proxy",
-      "interrupt_exist_connections":true
-    },
-    {
-      "type": "vless",
-      "tag": "proxy",
-      "server": "",
-      "server_port": 443,
-      "uuid": "",
-      "flow": "xtls-rprx-vision",
-      "tls": {
-        "enabled": true,
-        "server_name": "itunes.apple.com",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "safari"
-        },
-        "reality": {
-          "enabled": true,
-          "public_key": ""
-        }
-      },
-      "packet_encoding": "xudp"
-    },
-    {
       "type": "direct",
       "tag": "direct"
     },
@@ -122,7 +95,7 @@
     },
     {
       "type": "dns",
-      "tag": "dns"
+      "tag": "dns-out"
     }
   ],
   "route": {
@@ -138,7 +111,7 @@
             "port": 53
           }
         ],
-        "outbound": "dns"
+        "outbound": "dns-out"
       },
       {
         "type": "logical",
@@ -222,4 +195,3 @@
       "external_ui": "dashbord"
     }
   }
-}
