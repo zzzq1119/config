@@ -37,16 +37,25 @@
         "server": "local"
       },
       {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+           {
+             "query_type": [
+               "A",
+               "AAAA"
+             ]
+           },
+          {
+            "rule_set": "geosite-geolocation-!cn"
+          }
+        ],
+        "server": "remote"
+      },
+      {
         "rule_set": "geoip-cn",
         "server": "google",
         "client_subnet": "101.74.18.1"
-      },
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "remote"
       }
     ],
     "fakeip": {
@@ -63,17 +72,9 @@
       "interface_name": "tun0",
       "inet4_address": "172.19.0.1/30",
       "inet6_address": "fdfe:dcba:9876::1/126",
-      "mtu": 9000,
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
-      "platform": {
-        "http_proxy": {
-          "enabled": false,
-          "server": "127.0.0.1",
-          "server_port": 8080
-        }
-      },
       "sniff": true
     }
   ],
@@ -155,6 +156,12 @@
         "tag": "geosite-geolocation-cn",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-geolocation-!cn",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
       }
     ],
     "auto_detect_interface": true
