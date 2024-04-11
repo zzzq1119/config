@@ -7,7 +7,8 @@
     "servers": [
       {
         "tag": "google",
-        "address": "tls://8.8.8.8"
+        "address": "tls://8.8.8.8",
+        "detour": "select"
       },
       {
         "tag": "local",
@@ -189,6 +190,7 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
       }
     ],
+    "final": "select",
     "auto_detect_interface": true
   },
   "experimental": {
