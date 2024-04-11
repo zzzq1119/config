@@ -1,6 +1,6 @@
 {
     "log": {
-    "level": "debug",
+    "level": "info",
     "timestamp": true
   },
   "dns": {
@@ -53,9 +53,19 @@
         "server": "remote"
       },
       {
-        "rule_set": "geoip-cn",
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
         "server": "google",
-        "client_subnet": "101.74.18.1"
+        "client_subnet": "202.99.160.68"
       }
     ],
     "fakeip": {
@@ -80,16 +90,31 @@
   ],
   "outbounds": [
     {
+      "tag": "select",
+      "type": "selector",
+      "default": "urltest",
+      "outbounds": [
+        "urltest",
+        "include: 新加坡|日本|香港|台湾|德国|美国|韩国"
+      ]
+    },
+    {
+      "tag": "urltest",
+      "type": "urltest",
+      "outbounds": [
+        "include: 新加坡|日本|香港"
+      ],
+      "interval": "5m",
+      "tolerance": 5,
+      "interrupt_exist_connections": true
+    },
+    {
       "type": "direct",
       "tag": "direct"
     },
     {
       "type": "block",
       "tag": "block"
-    },
-    {
-      "type": "dns",
-      "tag": "dns-out"
     }
   ],
   "route": {
