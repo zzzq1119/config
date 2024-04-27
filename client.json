@@ -91,27 +91,23 @@
   ],
   "outbounds": [
     {
-      "tag": "proxy",
+      "tag": "select",
       "type": "selector",
       "default": "urltest",
       "outbounds": [
         "urltest",
-        "{all}"
+        "include: 新加坡|日本|香港|台湾|德国|美国|韩国"
       ]
     },
     {
       "tag": "urltest",
       "type": "urltest",
       "outbounds": [
-        "{all}"
+        "include: 新加坡|日本|香港"
       ],
       "interval": "5m",
       "tolerance": 5,
       "interrupt_exist_connections": true
-    },
-    {
-      "type": "dns",
-      "tag": "dns"
     },
     {
       "type": "direct",
@@ -135,7 +131,7 @@
             "port": 53
           }
         ],
-        "outbound": "dns"
+        "outbound": "dns-out"
       },
       {
         "ip_is_private": true,
@@ -147,7 +143,7 @@
       },
       {
         "clash_mode": "Global",
-        "outbound": "proxy"
+        "outbound": "select"
       },
       {
         "protocol": "stun",
@@ -181,7 +177,7 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
       }
     ],
-    "final": "proxy",
+    "final": "select",
     "auto_detect_interface": true
   },
   "experimental": {
