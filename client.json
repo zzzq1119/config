@@ -7,7 +7,7 @@
     "servers": [
       {
         "tag": "google",
-        "address": "tls://8.8.8.8",
+        "address": "8.8.8.8",
         "detour": "select"
       },
       {
@@ -105,7 +105,7 @@
       "outbounds": [
         "include: 新加坡|日本|香港"
       ],
-      "interval": "5m",
+      "interval": "2m",
       "tolerance": 5,
       "interrupt_exist_connections": true
     },
@@ -183,7 +183,7 @@
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "store_rdrc": true
+      "store_fakeip": true
     },
     "clash_api": {
       "external_controller": "0.0.0.0:9090",
