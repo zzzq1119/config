@@ -1,13 +1,13 @@
 {
     "log": {
-    "level": "info",
+    "level": "debug",
     "timestamp": true
   },
   "dns": {
     "servers": [
       {
         "tag": "google",
-        "address": "8.8.8.8",
+        "address": "tls://8.8.8.8",
         "detour": "select"
       },
       {
@@ -93,9 +93,8 @@
     },
     {
       "tag": "openai",
-      "type": "selector",
+      "type": "urltest",
       "outbounds": [
-        "select",
         "exclude: 套餐|香港"
       ],
       "interrupt_exist_connections": true
@@ -173,7 +172,7 @@
         "type": "remote",
         "tag": "geosite-cn",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"
       },
       {
         "type": "remote",
