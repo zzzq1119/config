@@ -54,8 +54,17 @@
         "server": "remote"
       },
       {
-        "rule_set": "geosite-geolocation-!cn",
-        "invert": true
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
         "server": "google",
         "client_subnet": "202.99.160.68"
       }
