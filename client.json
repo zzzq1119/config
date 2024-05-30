@@ -12,7 +12,7 @@
       },
       {
         "tag": "local",
-        "address": "202.99.160.68",
+        "address": "223.5.5.5",
         "detour": "direct"
       },
       {
@@ -155,9 +155,22 @@
         "outbound": "select"
       },
       {
-        "protocol": "stun",
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
         "outbound": "block"
-      },        
+      },    
       {
         "rule_set": "geosite-openai",
         "outbound": "openai"
