@@ -78,6 +78,13 @@
   },
   "inbounds": [
     {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 8080,
+      "tcp_fast_open": true
+    },
+    {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "tun0",
@@ -86,17 +93,26 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
-      "sniff": true
+      "sniff": true,
+      "platform": {
+        "http_proxy": {
+          "enabled": false,
+          "server": "127.0.0.1",
+          "server_port": 8080,
+          "bypass_domain": [],
+          "match_domain": []
+        }
+      }
     }
   ],
   "outbounds": [
     {
       "tag": "select",
       "type": "selector",
-      "default": "all-urltest",
+      "default": "urltest",
       "outbounds": [
-        "all-urltest",
-        "exclude: 官网|无法"
+        "urltest",
+        "exclude: 官网|无法|香港|套餐|剩余"
       ],
       "interrupt_exist_connections": true
     },
@@ -124,16 +140,6 @@
       "outbounds": [
         "exclude: 官网|无法|香港|套餐|剩余"
       ],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "all-urltest",
-      "type": "urltest",
-      "outbounds": [
-        "exclude: 官网|无法"
-      ],
-      "interval": "3m",
-      "tolerance": 5,
       "interrupt_exist_connections": true
     },
     {
@@ -194,7 +200,7 @@
         "outbound": "openai"
       },
       {
-        "rule_set": "geosite-tiktok"
+        "rule_set": "geosite-tiktok",
         "outbound": "tiktok"
       },
       {
