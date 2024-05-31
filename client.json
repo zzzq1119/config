@@ -93,32 +93,41 @@
     {
       "tag": "select",
       "type": "selector",
-      "default": "urltest",
+      "default": "all-urltest",
       "outbounds": [
-        "urltest",
+        "all-urltest",
         "exclude: 官网|无法"
       ],
       "interrupt_exist_connections": true
     },
     {
-      "tag": "other",
+      "tag": "openai",
       "type": "selector",
       "outbounds": [
-        "other-urltest",
-        "exclude: 官网|无法|香港|剩余"
+        "urltest",
+        "exclude: 官网|无法|香港|套餐|剩余"
       ],
       "interrupt_exist_connections": true
     },
     {
-      "tag": "other-urltest",
-      "type": "urltest",
+      "tag": "tiktok",
+      "type": "selector",
       "outbounds": [
-        "exclude: 官网|无法|香港|剩余"
+        "urltest",
+        "exclude: 官网|无法|香港|套餐|剩余"
       ],
       "interrupt_exist_connections": true
     },
     {
       "tag": "urltest",
+      "type": "urltest",
+      "outbounds": [
+        "exclude: 官网|无法|香港|套餐|剩余"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "all-urltest",
       "type": "urltest",
       "outbounds": [
         "exclude: 官网|无法"
@@ -181,11 +190,12 @@
         "outbound": "block"
       },    
       {
-        "rule_set": [
-            "geosite-openai",
-            "geosite-tiktok"
-        ],
-        "outbound": "other"
+        "rule_set": "geosite-openai",
+        "outbound": "openai"
+      },
+      {
+        "rule_set": "geosite-tiktok"
+        "outbound": "tiktok"
       },
       {
         "rule_set": [
