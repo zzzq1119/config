@@ -96,15 +96,24 @@
       "default": "urltest",
       "outbounds": [
         "urltest",
-        "exclude: 套餐"
+        "exclude: 官网|无法"
       ],
       "interrupt_exist_connections": true
     },
     {
-      "tag": "openai",
+      "tag": "other",
+      "type": "selector",
+      "outbounds": [
+        "other-urltest",
+        "exclude: 官网|无法|香港|剩余"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "other-urltest",
       "type": "urltest",
       "outbounds": [
-        "exclude: 套餐|香港"
+        "exclude: 官网|无法|香港|剩余"
       ],
       "interrupt_exist_connections": true
     },
@@ -112,7 +121,7 @@
       "tag": "urltest",
       "type": "urltest",
       "outbounds": [
-        "exclude: 套餐"
+        "exclude: 官网|无法"
       ],
       "interval": "3m",
       "tolerance": 5,
@@ -172,8 +181,11 @@
         "outbound": "block"
       },    
       {
-        "rule_set": "geosite-openai",
-        "outbound": "openai"
+        "rule_set": [
+            "geosite-openai",
+            "geosite-tiktok"
+        ],
+        "outbound": "other"
       },
       {
         "rule_set": [
@@ -207,6 +219,12 @@
         "tag": "geosite-openai",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-openai.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-tiktok",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs"
       }
     ],
     "final": "select",
