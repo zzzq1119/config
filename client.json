@@ -78,14 +78,6 @@
   },
   "inbounds": [
     {
-      "type": "mixed",
-      "tag": "mixed-in",
-      "listen": "127.0.0.1",
-      "listen_port": 8080,
-      "set_system_proxy": false,
-      "tcp_fast_open": true
-    },
-    {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "tun0",
@@ -95,16 +87,7 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
-      "sniff": true,
-      "platform": {
-        "http_proxy": {
-          "enabled": false,
-          "server": "127.0.0.1",
-          "server_port": 8080,
-          "bypass_domain": [],
-          "match_domain": []
-        }
-      }
+      "sniff": true
     }
   ],
   "outbounds": [
