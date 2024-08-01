@@ -6,14 +6,14 @@
   "dns": {
     "servers": [
       {
-        "tag": "google",
-        "address": "tls://8.8.8.8",
-        "detour": "select"
-      },
-      {
         "tag": "local",
         "address": "223.5.5.5",
         "detour": "direct"
+      },
+      {
+        "tag": "google",
+        "address": "tls://8.8.8.8",
+        "detour": "select"
       },
       {
         "tag": "remote",
@@ -166,25 +166,11 @@
         "outbound": "tiktok"
       },
       {
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
+        "rule_set": "geosite-geolocation-!cn",
         "outbound": "select"
       }
     ],
     "rule_set": [
-      {
-        "type": "remote",
-        "tag": "geoip-cn",
-        
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"
-      },
       {
         "type": "remote",
         "tag": "geosite-geolocation-!cn",
