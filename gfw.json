@@ -57,7 +57,7 @@
     },
     "independent_cache": true
   },
-  
+  "inbounds": [
     {
       "type": "tun",
       "tag": "tun-in",
