@@ -96,42 +96,6 @@
   ],
   "outbounds": [
     {
-      "tag": "select",
-      "type": "selector",
-      "default": "urltest",
-      "outbounds": [
-        "urltest",
-        "exclude: 官网|无法|香港|套餐|剩余"
-      ],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "openai",
-      "type": "selector",
-      "outbounds": [
-        "urltest",
-        "exclude: 官网|无法|香港|套餐|剩余"
-      ],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "tiktok",
-      "type": "selector",
-      "outbounds": [
-        "urltest",
-        "exclude: 官网|无法|香港|套餐|剩余"
-      ],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "urltest",
-      "type": "urltest",
-      "outbounds": [
-        "exclude: 官网|无法|香港|套餐|剩余"
-      ],
-      "interrupt_exist_connections": true
-    },
-    {
       "type": "direct",
       "tag": "direct"
     },
