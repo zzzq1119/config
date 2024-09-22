@@ -104,7 +104,7 @@
         "{all}"
       ],
           "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]},
+    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
       "interrupt_exist_connections": true
     },
     {
@@ -115,7 +115,7 @@
           "{all}"
       ],
         "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]},
+    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
       "interrupt_exist_connections": true
     },
     {
@@ -126,7 +126,7 @@
           "{all}"
       ],
         "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]},
+    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
       "interrupt_exist_connections": true
     },
     {
@@ -136,7 +136,7 @@
           "{all}"
       ],
         "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}
+    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
   ],
       "interrupt_exist_connections": true
     },
