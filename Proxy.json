@@ -129,6 +129,10 @@
       "tag": "direct"
     },
     {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
       "type": "block",
       "tag": "block"
     }
