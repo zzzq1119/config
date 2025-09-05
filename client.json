@@ -1,40 +1,39 @@
 {
-    "log": {
-    "level": "debug",
+  "log": {
+    "level": "info",
     "timestamp": true
   },
   "dns": {
     "servers": [
       {
         "tag": "google",
-        "address": "tls://8.8.8.8",
-        "detour": "select"
+        "type": "tls",
+        "server": "8.8.8.8",
+        "detour": "Proxy"
       },
       {
         "tag": "local",
-        "address": "223.5.5.5",
-        "detour": "direct"
+        "type": "udp",
+        "server": "223.5.5.5"
       },
       {
         "tag": "remote",
-        "address": "fakeip"
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
       {
-        "outbound": "any",
-        "server": "local"
-      },
-      {
         "clash_mode": "Direct",
+        "action": "route",
         "server": "local"
       },
       {
-        "clash_mode": "Global",
-        "server": "google"
-      },
-      {
-        "rule_set": "geosite-cn",
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "route",
         "server": "local"
       },
       {
@@ -47,208 +46,150 @@
                "AAAA"
              ]
            },
-          {
-            "rule_set": "geosite-geolocation-!cn"
-          }
+           {
+             "rule_set": "geosite-geolocation-!cn"
+           }
         ],
+        "action": "route",
         "server": "remote"
-      },
-      {
-        "rule_set": "geosite-geolocation-!cn",
-        "server": "google"
       },
       {
         "type": "logical",
         "mode": "and",
         "rules": [
           {
-            "rule_set": "geosite-cn",
+            "rule_set": "geosite-geolocation-!cn",
             "invert": true
           },
           {
             "rule_set": "geoip-cn"
           }
         ],
+        "action": "route",
         "server": "google",
         "client_subnet": "202.99.160.68"
       }
     ],
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    },
     "independent_cache": true
   },
   "inbounds": [
     {
       "type": "tun",
       "tag": "tun-in",
-      "type": "tun",
+      "interface_name": "tun0",
       "address": [
-        "172.19.0.1/30",
+        "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "auto_route": true,
-      "strict_route": true,
-      "stack": "mixed",
-      "sniff": true
+      "stack": "system",
+      "auto_route": true
     }
   ],
   "outbounds": [
-      {
-      "tag": "select",
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "Proxy",
       "type": "selector",
-      "default": "urltest",
       "outbounds": [
         "urltest",
         "{all}"
       ],
-          "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "openai",
-      "type": "selector",
-      "outbounds": [
-        "urltest",
-          "{all}"
-      ],
-        "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
-      "interrupt_exist_connections": true
-    },
-    {
-      "tag": "tiktok",
-      "type": "selector",
-      "outbounds": [
-        "urltest",
-          "{all}"
-      ],
-        "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
+      "default": "urltest",
+      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余"]}],
       "interrupt_exist_connections": true
     },
     {
       "tag": "urltest",
       "type": "urltest",
       "outbounds": [
-          "{all}"
+        "{all}"
       ],
-        "filter": [
-    {"action": "exclude", "keywords": ["官网|无法|香港|套餐|剩余"]}],
+      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余"]}],
       "interrupt_exist_connections": true
-    },
-    {
-      "type": "direct",
-      "tag": "direct"
-    },
-    {
-      "type": "block",
-      "tag": "block"
     }
   ],
   "route": {
+    "default_domain_resolver": "local",
+    "rule_set": [
+      {
+        "tag": "geolocation-!cn",
+        "type": "remote",
+        "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-geolocation-!cn.srs",
+        "download_detour": "Proxy",
+        "update_interval": "24h"
+      },
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-cn.srs",
+        "download_detour": "Proxy",
+        "update_interval": "24h"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour": "Proxy",
+        "update_interval": "10d"
+      }
+    ],
     "rules": [
+      {
+        "action": "sniff"
+      },
       {
         "type": "logical",
         "mode": "or",
         "rules": [
           {
-            "protocol": "dns"
+            "port": 53
           },
           {
-            "port": 53
+            "protocol": "dns"
           }
         ],
-        "outbound": "dns-out"
+        "action": "hijack-dns"
+      },
+      {
+        "clash_mode": "Direct",
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
+          "geosite-cn"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "action": "route",
+        "outbound": "direct"
       },
       {
         "ip_is_private": true,
         "outbound": "direct"
-      },
-      {
-        "clash_mode": "Direct",
-        "outbound": "direct"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "select"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "outbound": "block"
-      },    
-      {
-        "rule_set": "geosite-openai",
-        "outbound": "openai"
-      },
-      {
-        "rule_set": "geosite-tiktok",
-        "outbound": "tiktok"
-      },
-      {
-        "rule_set": [
-          "geoip-cn",
-          "geosite-cn"
-        ],
-        "outbound": "direct"
       }
     ],
-    "rule_set": [
-      {
-        "type": "remote",
-        "tag": "geoip-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-geolocation-!cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-openai",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-openai.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-tiktok",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs"
-      }
-    ],
-    "final": "select",
-    "auto_detect_interface": true
+    "find_process": true,
+    "auto_detect_interface": true,
+    "final": "Proxy"
   },
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "store_rdrc": true
+      "store_fakeip": true,
+      "store_rdrc": true,
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
-      "external_ui": "metacubexd",
-      "external_ui_download_url": "https://github.com/MetaCubeX/yacd/archive/gh-pages.zip"
+      "external_ui": "zashboard",
+      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "Proxy"
     }
   }
 }
