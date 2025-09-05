@@ -115,7 +115,7 @@
     "default_domain_resolver": "local",
     "rule_set": [
       {
-        "tag": "geolocation-!cn",
+        "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "url": "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-geolocation-!cn.srs",
         "download_detour": "Proxy",
