@@ -98,7 +98,7 @@
         "{all}"
       ],
       "default": "urltest",
-      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余"]}],
+      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余|台湾"]}],
       "interrupt_exist_connections": true
     },
     {
@@ -107,7 +107,7 @@
       "outbounds": [
         "{all}"
       ],
-      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余"]}],
+      "filter": [{"action": "exclude","keywords": ["官网|无法|香港|套餐|剩余|台湾"]}],
       "interrupt_exist_connections": true
     }
   ],
