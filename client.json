@@ -81,7 +81,10 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "stack": "system",
+      "route_exclude_address": [
+        "0.0.0.0/31"
+      ],
+      "stack": "mixed",
       "auto_route": true
     }
   ],
